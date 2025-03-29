@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+#if NET6_0_OR_GREATER
+using Microsoft.AspNetCore.Http.Metadata;
+#endif
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NSwag.Generation.AspNetCore;
@@ -39,16 +42,33 @@ public class RequestBodyExampleProcessor : IOperationProcessor
                 continue;
 
             var endpointSpecificExampleAttributes = context.MethodInfo.GetCustomAttributes<EndpointSpecificExampleAttribute>();
-            SetExamples(
-                GetExamples(
-                    exampleProvider, 
-                    parameter.Key.ParameterType, 
-                    endpointSpecificExampleAttributes
-                        .Where(x => x.ExampleType == ExampleType.Request || x.ExampleType == ExampleType.Both)
-                        .SelectMany(x => x.ExampleTypes), ExampleType.Request
+            var parameterType = parameter.Key?.ParameterType;
+
+#if NET6_0_OR_GREATER
+            if (parameterType is null && 
+                context is AspNetCoreOperationProcessorContext aspNetCoreOperationProcessorContext)
+            {
+                parameterType = aspNetCoreOperationProcessorContext.ApiDescription.ActionDescriptor.EndpointMetadata
+                    .OfType<IAcceptsMetadata>()
+                    .Where(metadata => metadata.ContentTypes.Contains(MediaTypeName))
+                    .Select(metadata => metadata.RequestType)
+                    .FirstOrDefault();
+            }
+#endif
+            
+            if (parameterType is not null)
+            {
+                SetExamples(
+                    GetExamples(
+                        exampleProvider, 
+                        parameterType, 
+                        endpointSpecificExampleAttributes
+                            .Where(x => x.ExampleType == ExampleType.Request || x.ExampleType == ExampleType.Both)
+                            .SelectMany(x => x.ExampleTypes), ExampleType.Request
                     ), 
-                mediaType
+                    mediaType
                 );
+            }
         }
     }
 
