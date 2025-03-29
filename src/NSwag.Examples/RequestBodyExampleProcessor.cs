@@ -72,27 +72,40 @@ public class RequestBodyExampleProcessor : IOperationProcessor
         }
     }
 
-    private void SetResponseExamples(OperationProcessorContext context, SwaggerExampleProvider exampleProvider) {
-        foreach (var response in context.OperationDescription.Operation.Responses) {
+    private void SetResponseExamples(OperationProcessorContext context, SwaggerExampleProvider exampleProvider)
+    {
+        foreach (var response in context.OperationDescription.Operation.Responses)
+        {
             if (!int.TryParse(response.Key, out var responseStatusCode))
                 continue;
 
             if (!response.Value.Content.TryGetValue(MediaTypeName, out var mediaType))
                 continue;
 
-            var attributesWithSameKey = GetAttributesWithSameStatusCode(context.MethodInfo, responseStatusCode);
+            var typesWithSameKey = GetResponseTypesWithSameStatusCode(context.MethodInfo, responseStatusCode);
 
             //get attributes from controller, in case when no attribute on action was found
-            if (!attributesWithSameKey.Any())
-                attributesWithSameKey = GetAttributesWithSameStatusCode(context.MethodInfo.DeclaringType, responseStatusCode);
+            if (!typesWithSameKey.Any() && context.MethodInfo.DeclaringType is { } declaringType)
+                typesWithSameKey = GetResponseTypesWithSameStatusCode(declaringType, responseStatusCode);
 
-            if (attributesWithSameKey.Count > 1)
-                _logger.LogWarning($"Multiple {nameof(ProducesResponseTypeAttribute)} defined for method {context.MethodInfo.Name}, selecting first.");
-            else if (attributesWithSameKey.Count == 0)
+#if NET6_0_OR_GREATER
+            if (!typesWithSameKey.Any() &&
+                context is AspNetCoreOperationProcessorContext aspNetCoreOperationProcessorContext)
+            {
+                typesWithSameKey = GetResponseTypesWithSameStatusCode(aspNetCoreOperationProcessorContext, responseStatusCode);
+            }
+#endif
+
+
+            if (typesWithSameKey.Count > 1)
+                _logger.LogWarning(
+                    $"Multiple {nameof(ProducesResponseTypeAttribute)} defined for method {context.MethodInfo.Name}, selecting first.");
+            else if (typesWithSameKey.Count == 0)
                 continue;
 
-            var endpointSpecificExampleAttributes = context.MethodInfo.GetCustomAttributes<EndpointSpecificExampleAttribute>();
-            var valueType = attributesWithSameKey.FirstOrDefault()?.Type;
+            var endpointSpecificExampleAttributes =
+                context.MethodInfo.GetCustomAttributes<EndpointSpecificExampleAttribute>();
+            var valueType = typesWithSameKey.FirstOrDefault();
             SetExamples(GetExamples(exampleProvider, valueType, endpointSpecificExampleAttributes
                 .Where(x => x.ExampleType == ExampleType.Response || x.ExampleType == ExampleType.Both)
                 .Where(x => x.ResponseStatusCode != 0 && x.ResponseStatusCode == responseStatusCode)
@@ -121,10 +134,24 @@ public class RequestBodyExampleProcessor : IOperationProcessor
         return openApiExamples;
     }
 
-    private static List<ProducesResponseTypeAttribute> GetAttributesWithSameStatusCode(MemberInfo memberInfo, int responseStatusCode) {
-        return memberInfo
+    private static List<Type> GetResponseTypesWithSameStatusCode(MemberInfo memberInfo, int responseStatusCode) =>
+        memberInfo
             .GetCustomAttributes<ProducesResponseTypeAttribute>(true)
-            .Where(x => x.StatusCode == responseStatusCode)
+            .Where(attribute => attribute.StatusCode == responseStatusCode)
+            .Select(attribute => attribute.Type)
             .ToList();
-    }
+
+#if NET6_0_OR_GREATER
+    private static List<Type> GetResponseTypesWithSameStatusCode(AspNetCoreOperationProcessorContext aspNetCoreOperationProcessorContext, int responseStatusCode) =>
+        aspNetCoreOperationProcessorContext
+            .ApiDescription
+            .ActionDescriptor
+            .EndpointMetadata
+            .OfType<IProducesResponseTypeMetadata>()
+            .Where(metadata => metadata.StatusCode == responseStatusCode
+                               && metadata.ContentTypes.Contains(MediaTypeName)
+                               && metadata.Type is not null)
+            .Select(metadata => metadata.Type!)
+            .ToList();
+#endif
 }

@@ -11,8 +11,8 @@ public static class ZooRouteExtension
     public static RouteGroupBuilder MapZooApi(this RouteGroupBuilder endpoints)
     {
         var zoos = endpoints.MapGroup("zoos").WithTags("Zoos");
-        zoos.MapGet("", GetAnimals).WithName("Get animals").WithOpenApi();
-        zoos.MapGet("{name}", GetAnimal).WithName("Get animal").WithOpenApi();
+        zoos.MapGet("", GetAnimals).WithName("Get animals");
+        zoos.MapGet("{name}", GetAnimal).WithName("Get animal");
         zoos.MapPost("adopt", Adopt).WithName("Adopt animal")
             .Accepts<Animal>(MediaTypeNames.Application.Json)
             .Produces(201);
