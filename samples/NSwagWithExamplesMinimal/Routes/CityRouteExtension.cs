@@ -9,9 +9,9 @@ public static class CityRouteExtension
     public static RouteGroupBuilder MapCityApi(this RouteGroupBuilder endpoints)
     {
         var cities = endpoints.MapGroup("cities").WithTags("Cities");
-        cities.MapGet("", GetCities).WithName("Get cities");
-        cities.MapGet("{id:int}", GetCity).WithName("Get city");;
-        cities.MapDelete("{id:int}", DeleteCity).WithName("Delete city");;
+        cities.MapGet("", GetCities).WithName("Get cities").WithOpenApi();
+        cities.MapGet("{id:int}", GetCity).WithName("Get city").WithOpenApi();
+        cities.MapDelete("{id:int}", DeleteCity).WithName("Delete city").WithOpenApi();
         return endpoints;
     }
     
