@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSwagWithExamples", "NSwagW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSwag.Examples", "..\src\NSwag.Examples\NSwag.Examples.csproj", "{AF90693D-AC3F-4AB1-9821-AF6D830C0932}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSwagWithExamplesMinimal", "NSwagWithExamplesMinimal\NSwagWithExamplesMinimal.csproj", "{8130A917-642A-4CC2-B807-1D0119AC0FC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AF90693D-AC3F-4AB1-9821-AF6D830C0932}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF90693D-AC3F-4AB1-9821-AF6D830C0932}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF90693D-AC3F-4AB1-9821-AF6D830C0932}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8130A917-642A-4CC2-B807-1D0119AC0FC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8130A917-642A-4CC2-B807-1D0119AC0FC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8130A917-642A-4CC2-B807-1D0119AC0FC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8130A917-642A-4CC2-B807-1D0119AC0FC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

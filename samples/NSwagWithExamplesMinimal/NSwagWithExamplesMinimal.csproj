@@ -1,0 +1,97 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.14"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+        <PackageReference Include="RandomNameGeneratorLibrary" Version="1.2.2" />
+    </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NSwag.Examples\NSwag.Examples.csproj" />
+  </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="..\NSwagWithExamples\Models\City.cs">
+        <Link>Models\City.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\CustomInternalError.cs">
+        <Link>Models\CustomInternalError.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\CustomInternalErrorOnMethodLevel.cs">
+        <Link>Models\CustomInternalErrorOnMethodLevel.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\BrnoExample.cs">
+        <Link>Models\Examples\BrnoExample.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\CitiesExample.cs">
+        <Link>Models\Examples\CitiesExample.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\CustomInternalErrorExample.cs">
+        <Link>Models\Examples\CustomInternalErrorExample.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\CustomInternalErrorOnMethodLevelExample.cs">
+        <Link>Models\Examples\CustomInternalErrorOnMethodLevelExample.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\IntExample.cs">
+        <Link>Models\Examples\IntExample.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\Persons\PeopleExample.cs">
+        <Link>Models\Examples\Persons\PeopleExample.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\Persons\PersonExamples.cs">
+        <Link>Models\Examples\Persons\PersonExamples.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\Persons\Requests\PersonAge18Example.cs">
+        <Link>Models\Examples\Persons\Requests\PersonAge18Example.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\Persons\Requests\PersonAge69Example.cs">
+        <Link>Models\Examples\Persons\Requests\PersonAge69Example.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\Persons\Requests\PersonRequestExampleCindy.cs">
+        <Link>Models\Examples\Persons\Requests\PersonRequestExampleCindy.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\Persons\Requests\PersonRequestExampleTom.cs">
+        <Link>Models\Examples\Persons\Requests\PersonRequestExampleTom.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\Persons\Requests\PersonTextExample1.cs">
+        <Link>Models\Examples\Persons\Requests\PersonTextExample1.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\Persons\Requests\PersonTextExample2.cs">
+        <Link>Models\Examples\Persons\Requests\PersonTextExample2.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\Persons\Requests\PersonTextExample3.cs">
+        <Link>Models\Examples\Persons\Requests\PersonTextExample3.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Examples\PragueExample.cs">
+        <Link>Models\Examples\PragueExample.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Person.cs">
+        <Link>Models\Person.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Zoo\Animal.cs">
+        <Link>Models\Zoo\Animal.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Zoo\Examples\AnimalsExample.cs">
+        <Link>Models\Zoo\Examples\AnimalsExample.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Zoo\Examples\MonkeyExample.cs">
+        <Link>Models\Zoo\Examples\MonkeyExample.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Zoo\Examples\SlothExample.cs">
+        <Link>Models\Zoo\Examples\SlothExample.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Zoo\Monkey.cs">
+        <Link>Models\Zoo\Monkey.cs</Link>
+      </Compile>
+      <Compile Include="..\NSwagWithExamples\Models\Zoo\Sloth.cs">
+        <Link>Models\Zoo\Sloth.cs</Link>
+      </Compile>
+    </ItemGroup>
+
+</Project>
