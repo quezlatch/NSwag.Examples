@@ -18,6 +18,7 @@ var app = builder.Build();
 
 app.MapGroup("/api")
     .MapCityApi()
+    .MapPeopleApi()
     .MapZooApi();
 
 app.UseHttpsRedirection();
