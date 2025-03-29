@@ -12,10 +12,10 @@ public static class ZooRouteExtension
     {
         var zoos = endpoints.MapGroup("zoos").WithTags("Zoos");
         zoos.MapGet("", GetAnimals).WithName("Get animals");
-        zoos.MapGet("{name}", GetAnimal).WithName("Get animal");
-        zoos.MapPost("adopt", Adopt).WithName("Adopt animal")
+        zoos.MapPost("", Adopt).WithName("Adopt animal")
             .Accepts<Animal>(MediaTypeNames.Application.Json)
-            .Produces(201);
+            .Produces(StatusCodes.Status201Created);
+        zoos.MapGet("{name}", GetAnimal).WithName("Get animal");
         return endpoints;
     }
 

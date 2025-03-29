@@ -1,11 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <Version>1.0.14</Version>
-  </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="RandomNameGeneratorLibrary" Version="1.2.2" />

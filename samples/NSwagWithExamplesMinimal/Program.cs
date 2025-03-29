@@ -16,7 +16,7 @@ builder.Services.AddOpenApiDocument((settings, provider) =>
 
 var app = builder.Build();
 
-app.MapGroup("/api")
+app.MapGroup("/api/v1")
     .MapCityApi()
     .MapPeopleApi()
     .MapZooApi();
